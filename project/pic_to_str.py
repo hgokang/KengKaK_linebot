@@ -4,7 +4,7 @@ import re
 import datetime
 time = datetime.datetime.now()
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+pytesseract.pytesseract.tesseract_cmd = r"C:\Users\suppa\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
 def image_to_str():
     Image_path = 'received_line.jpeg'
 
