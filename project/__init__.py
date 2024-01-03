@@ -20,8 +20,6 @@ handler = WebhookHandler(channel_secret)
 
 app = Flask(__name__)
 
-file = open('test.txt', 'r', encoding='utf-8')
-read_file = file.read()
 @app.route("/callback", methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
@@ -34,11 +32,11 @@ def callback():
             Reply_message = 'ว่าไงน้อง'
             ReplyMessage(Reply_token,Reply_message,Channel_access_token)
         elif 'ตารางรายเดือน' in message:
-            Reply_message = read_file
+            Reply_message = readfile()
             ReplyMessage(Reply_token,Reply_message,Channel_access_token)
         elif 'check' in message:
             check_month()
-            Reply_message = read_file
+            Reply_message = readfile()
             ReplyMessage(Reply_token,Reply_message,Channel_access_token)
     body = request.get_data(as_text=True)
     try:
@@ -48,7 +46,10 @@ def callback():
 
     return 'OK'
 
-
+def readfile():
+    with open('test.txt', 'r', encoding='UTF-8') as file:
+        return file.read()
+    
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image_message(event):
     message_content = line_bot_api.get_message_content(event.message.id)
