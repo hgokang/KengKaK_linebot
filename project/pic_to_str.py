@@ -2,9 +2,9 @@ import pytesseract
 from PIL import Image
 import re
 import datetime
-time = datetime.datetime.now()
 
-pytesseract.pytesseract.tesseract_cmd = r"D:\Program Files\Tesseract-OCR\tesseract.exe"
+
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files (x86)\Tesseract-OCR\tesseract.exe"
 def image_to_str():
     Image_path = 'received_line.jpeg'
 
@@ -15,7 +15,6 @@ def image_to_str():
     name_prefix = name_match.group(1)
     name = name_match.group(2)
 
-    # ค้นหาจำนวนเงินจากข้อความ
     amount_pattern = r"\s+(\d+\.\d+)\s+บาท"
     amount_match = re.search(amount_pattern, text)
     amount = amount_match.group(1)
