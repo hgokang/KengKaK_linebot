@@ -1,4 +1,3 @@
-from Config import username,password
 import imaplib
 import email
 
@@ -30,7 +29,7 @@ class GmailClient:
         for part in msg.walk():
             if part.get_content_type() == "text/plain":
                 content += part.get_payload(decode=True).decode("utf-8", errors="ignore")
-        
+
         with open("netflix.txt", "w", encoding="utf-8") as file:
             file.write(content + "\n\n")
 
@@ -42,7 +41,7 @@ class GmailClient:
                     link = line.strip()
                     with open("netflix_link.txt", "w", encoding="utf-8") as output_file:
                         output_file.write(link)
-                    break
+                        return link
             else:
                 print("ไม่พบลิงก์ที่ต้องการ")
                 return("ไม่พบลิงก์ที่ต้องการ")
@@ -52,22 +51,3 @@ class GmailClient:
 
     def logout(self):
         self.imap.logout()
-
-client = GmailClient(username, password)
-client.login()
-client.select_inbox()
-
-criteria = '(SUBJECT "Netflix")'
-
-criteria_bytes = criteria.encode('utf-8')
-
-message_ids = client.search_emails(criteria_bytes)
-print(len(message_ids))
-msg = client.fetch_email(message_ids[len(message_ids)-1])
-client.save_email_content(msg)
-
-file_path = "netflix.txt"
-client.extract_access_code(file_path)
-
-client.close()
-client.logout()
