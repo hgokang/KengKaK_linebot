@@ -9,6 +9,7 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, ImageMessage, TextSendMessage
 import requests
 import json
+from project.gmail_reader import GmailClient
 
 # Set up your Line API credentials
 
@@ -38,6 +39,21 @@ def callback():
             check_month()
             Reply_message = readfile()
             ReplyMessage(Reply_token,Reply_message,Channel_access_token)
+        elif 'ขอรหัส' in message:
+            client = GmailClient(username, password)
+            client.login()
+            client.select_inbox()
+            criteria = '(SUBJECT "Netflix")'
+            criteria_bytes = criteria.encode('utf-8')
+            message_ids = client.search_emails(criteria_bytes)
+            msg = client.fetch_email(message_ids[len(message_ids)-1])
+            client.save_email_content(msg)
+            file_path = "netflix_link.txt"
+            Reply_message = client.extract_access_code(file_path).strip("[]")
+            client.close()
+            client.logout()
+            ReplyMessage(Reply_token,Reply_message,Channel_access_token)
+
     body = request.get_data(as_text=True)
     try:
         handler.handle(body, signature)
