@@ -48,7 +48,7 @@ def callback():
             message_ids = client.search_emails(criteria_bytes)
             msg = client.fetch_email(message_ids[len(message_ids)-1])
             client.save_email_content(msg)
-            file_path = "netflix_link.txt"
+            file_path = "netflix.txt"
             Reply_message = client.extract_access_code(file_path).strip("[]")
             client.close()
             client.logout()
