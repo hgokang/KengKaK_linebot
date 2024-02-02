@@ -7,7 +7,7 @@ import datetime
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files (x86)\Tesseract-OCR\tesseract.exe"
 def image_to_str():
     Image_path = 'received_line.jpeg'
-
+    time = datetime.datetime.now()
     image = Image.open(Image_path)
     text = pytesseract.image_to_string(image, lang='tha')
     name_pattern = r"(นาย|น\.ส\.|ด\.ช\.|ด\.ญ\.)\s([^\s]+)"
