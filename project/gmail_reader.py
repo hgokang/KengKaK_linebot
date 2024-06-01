@@ -42,6 +42,11 @@ class GmailClient:
                     with open("netflix_link.txt", "w", encoding="utf-8") as output_file:
                         output_file.write(link)
                         return link
+                if "https://www.netflix.com/account/update-primary-location?nftoken=" in line:
+                    link = line.strip()
+                    with open("netflix_link.txt", "w", encoding="utf-8") as output_file:
+                        output_file.write(link)
+                        return link
             else:
                 print("ไม่พบลิงก์ที่ต้องการ")
                 return("ไม่พบลิงก์ที่ต้องการ")
